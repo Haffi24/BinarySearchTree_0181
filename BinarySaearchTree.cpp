@@ -1,172 +1,150 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
 
-class Node
-{
+class node{
 public:
     int info;
-    Node *leftchild;
-    Node *rigtchild;
+    node *leftchild;
+    node *rightchild;
 
-
-    //Constructor for the node class
-    Node()
-    {
-        leftchild = nullptr; 
-        rigtchild = nullptr;
+    //constructor for the node class
+    node(){
+        leftchild = nullptr; // initialize left child to null
+        rightchild = nullptr; // initialize right child to null
     }
 };
 
 class BinaryTree
 {
+
 public:
-    Node *ROOT;
-
-    BinaryTree()
-    {
-        ROOT = nullptr; //initilize root to null
+    node *ROOT;
+    BinaryTree(){
+        ROOT = nullptr; //initializing ROOT to null
     }
-
-    void insert()
-    {
+    void insert(){
         int x;
-        cout << "Masukkan Nilai: ";
+        cout << "Masukkan nilai ";
         cin >> x;
+        
+        //step 1: Allocate memory for the new node
+        node *newnode = new node();
+
+        //step 2 : assing the value to the data field of new node 
+        newnode->info = x;
+
+        //step 3: make the left and right child of the new node point to null 
+        newnode->leftchild = nullptr;
+        newnode->rightchild = nullptr;
+
+        //step 4: locate the new node which will be the parent of the node to bw inserted
+        node *parent = nullptr;
+        node *currentnode = nullptr;
+        search(x, parent, currentnode);
+
+        //step 5: if parent is null (TREE is empty)
+        if(parent == nullptr){
+
+            //5a : Mark the new node as ROOT
+            ROOT = newnode;
+
+            //5b : Exit 
+            return;
+        }
+
+        //step 6: if the value in data field of new node is less than that of parent 
+        if (x < parent->info){
+
+            //6a :  make the left child of parent point to the new node 
+            parent->leftchild = newnode;
+
+            //6b : Exit 
+            return ;
+        }
+
+        //step 7: if the value in data field of new node is greater than that of the parent 
+        else if (x > parent->info){
+            //7a : make the right child of parent point to the new node 
+            parent->rightchild = newnode;
+
+            //7b : exit 
+            return ;
+        } 
     }
+void search(int element, node *&parent, node *&currentnode)
+    {
+        // This Function searches the currentNode of the specified Node as well as the current Node of its parent
+        currentnode = ROOT;
+        parent = nullptr;
+        while ((currentnode != nullptr) && (currentnode->info != element))
+        {
+            parent = currentnode;
+            if (element < currentnode->info)
+                currentnode = currentnode->leftchild;
+            else
+                currentnode = currentnode->rightchild;
+        }
+    }
+
     
-
-    // Step 1 : ALLOCATE MEMORY FOR THE NEW NODE
-    Node *newNode = new Node();
-
-    //Step 2 : Asiign value to the data field of new node
-    newNode->info = x;
-
-    //step 3 : Make the left and right child of the new node point to null
-    newNode->leftchild = nullptr;
-    newNode->rightchild = nullptr;
-
-    //step 4 : Locate the nodoe which will be the parent of the node to be insterted
-    Node *parent = nullptr;
-    Node *currentNode = nullptr;
-    search(x, parent, currentNode);
-
-    //Step 5 : if the parent is null (tree is empty)
-    if (parent == nullptr)
+    void inorder(node *ptr)
     {
-        //step 5a : MARK THE NEW NODE AS ROOT
-        ROOT = newNode;
+        if (isEmpty())
+        {
+            cout << "Tree is empty" << endl;
+            return;
+        }
+        if (ptr == nullptr)
+            return;
 
-        //step 5b: EXIT
-        return;
+        inorder(ptr->leftchild);
+        cout << ptr->info << " ";
+        inorder(ptr->rightchild);
+        
+    }    
 
-    } 
-
-    //step 6 : IF THE CALUE IN THE DATA FIELD OF THE NODES IS LESS THAN THAT OF PARENT
-    if (x < parent->info)
+        void preorder(node *ptr)
     {
-        //6a : make the left child of parent point to the new node
-        parent->leftchild = newNode;
+        if (isEmpty())
+        {
+            cout << "Tree is empty" << endl;
+            return;
+        }
+        if (ptr == nullptr)
+            return;
 
-        //6b : Exit
-        return;
+        cout << ptr->info << " ";
+        preorder(ptr->leftchild);
+        preorder(ptr->rightchild);
+        
+    }    
 
-    }
-
-    //STEP 7 : IF the value in the data field of the new node is greater than that of the parent
-    else if (x > parent->info)
+        void postorder(node *ptr)
     {
-       //7a : Make the roght child of parent point to the newnode
-       parent->rightchild = newNode;
-       
-       
+        if (isEmpty())
+        {
+            cout << "Tree is empty" << endl;
+            return;
+        }
+        if (ptr == nullptr)
+            return;
 
-
-       //7b : exit
-       return;
-       w
-    }
-}
-
-
-void search(int element, Node *&parent, Node *&currentNode)
-{
-    //This function searches the currentnode of the specified node as well as the current node of its parrent
-    currentNode = ROOT;
-    parent = nullptr;
-    while (( currentNode != nullptr) && (currentNode->info != element))
-    {
-        parent = currentNode;
-        if (element < currentNode->info)
-            currentNode = currentNode->leftchild;
-        else
-        currentNode = currentNode->rigtchild
-    
-    }
-}
-
-void inorder(Node *ptr)
-{
-    if(is_empty())
-    {
-        cout << "Tree is Empty" << endl;
-        return;
-    }
-    if (ptr ==nullptr)
-    return;
-
-    inorder(ptr->leftchild);
-    cout << ptr->info << " "; //parrent
-    inorder(ptr->rigtchild);
-
-
-}
-
-
-void preorder(Node *ptr)
-{
-    if(is_empty())
-    {
-        cout << "Tree is Empty" << endl;
-        return;
-    }
-    if (ptr ==nullptr)
-    return;
-
-    cout << ptr->info << " "; //parrent
-    preorder(ptr->leftchild);
-    preorder(ptr->rigtchild);
-
-
-}
-
-
-void postorder(Node *ptr)
-{
-    if(is_empty())
-    {
-        cout << "Tree is Empty" << endl;
-        return;
-    }
-    if (ptr ==nullptr)
-    return;
-
-    postorder(ptr->leftchild);
-    postorder(ptr->rigtchild);
-    cout << ptr->info << " "; //parrent
-
+        postorder(ptr->leftchild);
+        postorder(ptr->rightchild);
+        cout << ptr->info << " ";
+    }    
 
     bool isEmpty()
     {
-        //Checks if the tree is empty
+        // Checks if the tree is empty
         return ROOT == nullptr;
     }
-
-
 };
 
-int main()
-{
-BinaryTree x;
+
+int main(){
+
+    BinaryTree x;
     while (true)
     {
         cout << "\nMenu" << endl;
@@ -214,4 +192,4 @@ BinaryTree x;
         }
         }
     }
-}
+};
