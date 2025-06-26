@@ -20,4 +20,19 @@ public:
 class BinaryTree
 {
 public:
+    Node *ROOT;
+
+    BinaryTree()
+    {
+        ROOT = nullptr; //initilize root to null
+    }
+
+    void insert()
+    {
+        int x;
+        cout << "Masukkan Nilai: ";
+        cin >> x;
+    }
     
+
+   
