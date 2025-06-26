@@ -35,4 +35,7 @@ public:
     }
     
 
-   
+    // Step 1 : ALLOCATE MEMORY FOR THE NEW NODE
+    Node *newNode = new Node();
+
+    
