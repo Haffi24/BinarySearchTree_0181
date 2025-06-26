@@ -45,4 +45,7 @@ public:
     newNode->leftchild = nullptr;
     newNode->rightchild = nullptr;
 
-    
+    //step 4 : Locate the nodoe which will be the parent of the node to be insterted
+    Node *parent = nullptr;
+    Node *currentNode = nullptr;
+    search(x, parent, currentNode);
