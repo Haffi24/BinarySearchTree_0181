@@ -61,4 +61,15 @@ public:
 
     } 
 
+    //step 6 : IF THE CALUE IN THE DATA FIELD OF THE NODES IS LESS THAN THAT OF PARENT
+    if (x < parent->info)
+    {
+        //6a : make the left child of parent point to the new node
+        parent->leftchild = newNode;
+
+        //6b : Exit
+        return;
+
+    }
+
     
